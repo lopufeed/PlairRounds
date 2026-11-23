@@ -3,25 +3,78 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#10131f" />
-    <meta name="description" content="Небольшая браузерная игра для телефона и компьютера." />
-    <title>Поймай звёзды</title>
+    <meta name="theme-color" content="#0c1113" />
+    <meta name="description" content="PLΛNETS — настольная космическая дуэль" />
+    <title>PLΛNETS</title>
     <!-- Для подтверждения авторства PLAIR добавь сюда: <meta name="plair-verify" content="plair-ТВОЙ-КОД"> -->
     <!-- Для отправки очков подключи SDK: <script src="https://plair.pro/sdk.js"></script> -->
   </head>
   <body>
-    <main class="game-shell">
-      <header class="topbar">
-        <div><p class="eyebrow">МИНИ-ИГРА</p><h1>Поймай звёзды</h1></div>
-        <div class="score-box" aria-live="polite"><span>Счёт</span><strong id="score">0</strong></div>
-      </header>
-      <section class="stage" aria-label="Игровое поле">
-        <canvas id="game" aria-label="Лови падающие звёзды корзиной"></canvas>
-        <div class="overlay" id="overlay">
-          <div class="card"><span class="sparkle">✦</span><h2 id="message-title">Готов играть?</h2><p id="message-copy">Двигай корзину и лови звёзды. На телефоне перетаскивай пальцем.</p><button id="start">Играть</button></div>
+    <main class="app">
+      <section id="menu" class="screen menu-screen">
+        <div class="title-art" aria-hidden="true"><span class="planet planet-red"></span><span class="planet planet-blue"></span><span class="title-orbit"></span></div>
+        <h1>PLΛNETS</h1>
+        <div class="mode-picks">
+          <button class="mode-button mode-primary" data-mode="ai">Дуэль с ИИ</button>
+          <button class="mode-button" data-mode="pvp">Локальная дуэль</button>
         </div>
       </section>
-      <footer><span>← → или A / D</span><span>На телефоне — свайп</span><button class="quiet-button" id="restart" type="button">Начать заново</button></footer>
+
+      <section id="skins" class="screen skins-screen hidden">
+        <header class="skin-head"><button id="skin-back" class="back-button" aria-label="Назад">×</button></header>
+        <div class="skin-title"><small id="skin-turn"></small><h2 id="skin-title-text">ВЫБЕРИ ПЛАНЕТУ</h2></div>
+        <div id="skin-showcase" class="skin-showcase">
+          <span class="showcase-orbit orbit-one"></span><span class="showcase-orbit orbit-two"></span>
+          <span class="showcase-orb skin-orb skin-plain"></span>
+          <div class="showcase-copy"><strong id="skin-showcase-name">Архэ</strong><small id="skin-showcase-idea">ИСТОК МАТЕРИИ</small></div>
+        </div>
+        <div id="skin-players" class="skin-players"></div>
+        <div id="skin-options" class="skin-options"></div>
+        <button id="skin-start" class="skin-start">НАЧАТЬ БИТВУ ПЛАНЕТ</button>
+      </section>
+
+      <section id="battle" class="screen battle-screen hidden">
+        <header class="battle-head">
+          <button id="back-to-menu" class="back-button" aria-label="В меню">×</button>
+          <div class="match-mark"><span class="overline">ПАРТИЯ <b id="duel-number">01</b></span><div id="campaign-pips" class="pips" aria-label="Победы в кампании"></div></div>
+          <span aria-hidden="true"></span>
+        </header>
+        <div class="arena-wrap" id="arena-wrap">
+          <canvas id="arena" aria-label="Арена космической дуэли"></canvas>
+          <div id="touch-controls" class="touch-controls hidden" aria-hidden="true">
+            <div class="virtual-stick" data-stick="move"><span class="stick-ring"></span><i class="stick-knob"></i></div>
+            <div class="virtual-stick" data-stick="fire"><span class="stick-ring"></span><i class="stick-knob"></i></div>
+          </div>
+          <div id="round-intro" class="round-intro hidden"><strong>Да начнется битва!</strong></div>
+          <div id="curtain" class="curtain hidden" aria-live="assertive"><h2 id="curtain-title">Раунд завершен!</h2><p id="curtain-continue" class="curtain-continue">Дальше<span></span></p></div>
+        </div>
+        <div class="fighter-readout"><span class="fighter-name name-one"><i></i><b id="name-one">Ты</b><small id="health-one">●</small><small id="charge-one" class="charge-count"></small></span><span class="fighter-name name-two"><small id="charge-two" class="charge-count"></small><small id="health-two">●</small><b id="name-two">Соперник</b><i></i></span></div>
+        <div id="exit-confirm" class="exit-confirm hidden" role="dialog" aria-modal="true" aria-labelledby="exit-title">
+          <div class="exit-card"><h2 id="exit-title">Выйти из дуэли?</h2><div><button id="exit-stay" type="button">Остаться</button><button id="exit-leave" type="button">Сдаться</button></div></div>
+        </div>
+      </section>
+
+      <section id="upgrade" class="screen upgrade-screen hidden">
+        <header class="upgrade-head"><button id="upgrade-menu" class="back-button" aria-label="В меню">×</button><span></span></header>
+        <div class="upgrade-boards">
+          <section class="upgrade-side upgrade-red" id="upgrade-side-two">
+            <header><i></i><strong id="upgrade-name-two">Красный бог</strong><small id="upgrade-role-two"></small></header>
+            <div id="card-offers-two" class="card-offers"></div>
+            <div class="opponent-selection" aria-hidden="true"><span>ВЫБОР СОПЕРНИКА</span></div>
+          </section>
+          <div class="upgrade-center-title"><span></span><h2 id="upgrade-title">ВЫБОР УЛУЧШЕНИЯ</h2><span></span></div>
+          <section class="upgrade-side upgrade-blue" id="upgrade-side-one">
+            <header><i></i><strong id="upgrade-name-one">Синий бог</strong><small id="upgrade-role-one"></small></header>
+            <div id="card-offers-one" class="card-offers"></div>
+          </section>
+        </div>
+      </section>
+
+      <section id="ending" class="screen ending-screen hidden">
+        <div class="ending-art" aria-hidden="true"><span></span></div>
+        <h2 id="ending-title">Корона твоя</h2>
+        <button id="play-again" class="mode-button mode-primary">Сразиться еще раз</button><button id="ending-menu" class="text-button">В меню</button>
+      </section>
     </main>
     <script type="module" src="/src/main.js"></script>
   </body>
