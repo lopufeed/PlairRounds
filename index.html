@@ -15,8 +15,8 @@
         <div class="title-art" aria-hidden="true"><span class="planet planet-red"></span><span class="planet planet-blue"></span><span class="title-orbit"></span></div>
         <h1>PLΛNETS</h1>
         <div class="mode-picks">
-          <button class="mode-button mode-primary" data-mode="ai">Дуэль с сущностью</button>
-          <button class="mode-button" data-mode="pvp">Локальная дуэль</button>
+          <button class="mode-button mode-primary" data-mode="ai"><span class="mode-button-label">Дуэль с сущностью</span></button>
+          <button class="mode-button" data-mode="pvp"><span class="mode-button-label">Локальная дуэль</span></button>
         </div>
         <div id="career-progress" class="career-progress" role="group" aria-label="Планетарные открытия">
           <div class="career-progress-head"><span>Планетарные открытия</span><b id="career-percent">0%</b></div>
@@ -27,15 +27,22 @@
 
       <section id="skins" class="screen skins-screen hidden">
         <header class="skin-head"><button id="skin-back" class="back-button" aria-label="Назад">×</button></header>
-        <div class="skin-title"><small id="skin-turn"></small><h2 id="skin-title-text">ВЫБЕРИ ПЛАНЕТУ</h2></div>
-        <div id="skin-showcase" class="skin-showcase">
-          <span class="showcase-orbit orbit-one"></span><span class="showcase-orbit orbit-two"></span>
-          <span class="showcase-orb skin-orb skin-plain"></span>
-          <div class="showcase-copy"><strong id="skin-showcase-name">Архэ</strong><small id="skin-showcase-idea">ИСТОК МАТЕРИИ</small><small id="skin-showcase-bonus" class="skin-showcase-bonus"></small></div>
+        <div class="skin-builder">
+          <section class="skin-preview-column" aria-label="Предпросмотр планеты">
+            <div class="skin-title"><small id="skin-turn"></small><h2 id="skin-title-text">СОЗДАЙ ПЛАНЕТУ</h2></div>
+            <div id="skin-showcase" class="skin-showcase">
+              <span class="showcase-orbit orbit-one"></span><span class="showcase-orbit orbit-two"></span>
+              <span class="showcase-orb skin-orb skin-plain"><i id="skin-showcase-core" class="showcase-core-mark" aria-hidden="true"></i></span>
+              <div class="showcase-copy"><strong id="skin-showcase-name">Архэ</strong><small id="skin-showcase-idea">ИСТОК МАТЕРИИ</small><small id="skin-showcase-bonus" class="skin-showcase-bonus"></small><small id="skin-showcase-synergy" class="skin-showcase-synergy"></small></div>
+            </div>
+          </section>
+          <section class="skin-pick-column" aria-label="Выбор внешнего слоя и ядра">
+            <div id="skin-players" class="skin-players"></div>
+            <div id="skin-options" class="skin-options"></div>
+          </section>
         </div>
-        <div id="skin-players" class="skin-players"></div>
-        <div id="skin-options" class="skin-options"></div>
         <div class="skin-start-row">
+          <button id="skin-return-blue" class="skin-return-blue hidden" type="button" aria-label="Вернуться к выбору синего игрока">←</button>
           <button id="skin-start" class="skin-start">НАЧАТЬ БИТВУ ПЛАНЕТ</button>
           <div id="ai-difficulty" class="ai-difficulty" aria-label="Статус сущности"></div>
         </div>
@@ -43,7 +50,7 @@
 
       <section id="battle" class="screen battle-screen hidden">
         <header class="battle-head">
-          <button id="back-to-menu" class="back-button" aria-label="В меню">×</button>
+          <button id="back-to-menu" class="back-button" aria-label="Пауза">×</button>
           <div class="match-mark"><span class="overline" id="duel-number">ПЕРВАЯ ПАРТИЯ</span></div>
           <span aria-hidden="true"></span>
         </header>
@@ -54,18 +61,29 @@
             <div class="virtual-stick" data-player="1" aria-label="Стик красной планеты"><span class="stick-ring"></span><i class="stick-knob"></i></div>
           </div>
           <div id="round-intro" class="round-intro hidden"><strong>Да начнется битва!</strong></div>
+          <p id="first-round-hint" class="first-round-hint hidden" role="status"></p>
           <div id="curtain" class="curtain hidden" aria-live="assertive"><h2 id="curtain-title">Раунд завершен!</h2><p id="curtain-continue" class="curtain-continue">Дальше<span></span></p></div>
         </div>
       </section>
 
       <div id="exit-confirm" class="exit-confirm hidden" role="dialog" aria-modal="true" aria-labelledby="exit-title">
-        <div class="exit-card"><h2 id="exit-title">Выйти из дуэли?</h2><div><button id="exit-stay" type="button">Остаться</button><button id="exit-leave" type="button">Сдаться</button></div></div>
+        <div class="exit-card">
+          <h2 id="exit-title">Пауза</h2>
+          <fieldset class="pause-audio" aria-label="Громкость">
+            <span id="pause-music-label">Музыка</span><div id="pause-music" class="pause-volume" role="radiogroup" aria-labelledby="pause-music-label"></div>
+            <span id="pause-sfx-label">Звуки</span><div id="pause-sfx" class="pause-volume" role="radiogroup" aria-labelledby="pause-sfx-label"></div>
+          </fieldset>
+          <div><button id="exit-leave" type="button">Сдаться</button><button id="exit-stay" type="button">Продолжить</button></div>
+        </div>
       </div>
 
       <section id="roster" class="screen roster-screen hidden">
         <header class="roster-header"><button id="roster-back" class="back-button" type="button" aria-label="Назад">×</button><span></span></header>
-        <div class="roster-title"><h2>Планетарные открытия</h2><div class="roster-level">Уровень <b id="roster-level-label">1 / 15</b></div><div class="roster-progress-row"><div class="roster-progress"><i id="roster-progress-fill"></i></div><b id="roster-percent">0%</b></div></div>
-        <div class="roster-actions"><button id="universe-key-open" class="roster-reset" type="button">Ключ вселенной</button><button id="roster-reset" class="roster-reset" type="button">Сбросить прогресс</button></div>
+        <div class="roster-title"><h2>Планетарные открытия</h2><div class="roster-progress-row"><b id="roster-level-label" class="roster-level-number">1</b><div class="roster-progress"><i id="roster-progress-fill"></i></div><b id="roster-percent">0%</b></div></div>
+        <div class="roster-actions">
+          <button id="universe-key-open" class="roster-reset roster-action" type="button"><span class="roster-action-label" data-glitch="Ключ вселенной">Ключ вселенной</span><svg class="roster-action-icon key-action-icon" viewBox="0 0 28 28" aria-hidden="true"><circle cx="9" cy="18" r="5.5"/><path d="m13 14 10-10m-4 0h4v4m-8 2 3 3m-7-1 3 3"/></svg></button>
+          <button id="roster-reset" class="roster-reset roster-action" type="button"><span class="roster-action-label">Сбросить прогресс</span><svg class="roster-action-icon planet-break-icon" viewBox="0 0 28 28" aria-hidden="true"><circle cx="13" cy="14" r="9"/><path d="m8 7 5 6-3 2 5 6m-2-14 1 5 5 2m-16 0-3 1m19-8 3-2m-5 16 2 2"/></svg></button>
+        </div>
         <div id="roster-list" class="roster-list"></div>
       </section>
 
@@ -85,7 +103,7 @@
           <button id="universe-key-close" class="universe-key-close" type="button" aria-label="Закрыть">×</button>
           <h2 id="universe-key-title">Ключ вселенной</h2>
           <p class="universe-key-current">Ключ текущей вселенной — <b id="universe-current-key">AAA</b><button id="universe-key-copy" type="button">КОПИРОВАТЬ</button></p>
-          <label for="universe-key-input">ВВЕДИ КЛЮЧ ДЛЯ<br>ПЕРЕПРОГРАММИРОВАНИЯ ВСЕЛЕННОЙ</label>
+          <label for="universe-key-input">ОБНОВИ ВСЕЛЕННУЮ ДРУГИМ КЛЮЧОМ</label>
           <input id="universe-key-input" type="text" inputmode="text" maxlength="3" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="universe-key-status">
           <p id="universe-key-status" class="universe-key-status" aria-live="polite"></p>
           <button id="universe-key-apply" class="mode-button mode-primary" type="button">ПЕРЕПРОГРАММИРОВАТЬ</button>
@@ -93,17 +111,18 @@
       </div>
 
       <section id="upgrade" class="screen upgrade-screen hidden">
-        <header class="upgrade-head"><button id="upgrade-menu" class="back-button" aria-label="В меню">×</button><span></span></header>
+        <header class="upgrade-head"><button id="upgrade-menu" class="back-button" aria-label="Пауза">×</button><span id="upgrade-context"></span><span></span></header>
         <div class="upgrade-boards">
           <section class="upgrade-side upgrade-red" id="upgrade-side-two">
-            <header><i></i><strong id="upgrade-name-two">Красный бог</strong><small id="upgrade-role-two"></small></header>
+            <header><i></i><small id="upgrade-role-two"></small></header>
             <div id="card-offers-two" class="card-offers"></div>
+            <div class="upgrade-identity red-player-caption"><strong id="upgrade-name-two">ПЛАНЕТА КРАСНОЙ СУЩНОСТИ</strong><small id="upgrade-body-two"></small></div>
             <button id="upgrade-reset-two" class="upgrade-reset hidden" type="button">Перезапустить ростер · 1 очко</button>
             <div class="opponent-selection" aria-hidden="true"><span>ВЫБОР СОПЕРНИКА</span></div>
           </section>
           <div class="upgrade-center-title"><span></span><h2 id="upgrade-title">ВЫБОР УЛУЧШЕНИЯ</h2><span></span></div>
           <section class="upgrade-side upgrade-blue" id="upgrade-side-one">
-            <header><i></i><strong id="upgrade-name-one">Синий бог</strong><small id="upgrade-role-one"></small></header>
+            <header><i></i><div class="upgrade-identity"><strong id="upgrade-name-one">ПЛАНЕТА СИНЕЙ СУЩНОСТИ</strong><small id="upgrade-body-one"></small></div><small id="upgrade-role-one"></small></header>
             <div id="card-offers-one" class="card-offers"></div>
             <button id="upgrade-reset-one" class="upgrade-reset hidden" type="button">Перезапустить ростер · 1 очко</button>
           </section>
